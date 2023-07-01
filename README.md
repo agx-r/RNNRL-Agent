@@ -4,6 +4,8 @@ This is a script that implements a Recurrent Neural Network (RNN) with reinforce
 
 The RNNRLAgent class provides the core functionality for the RNN-based agent. It includes methods for forward propagation, backward propagation, and saving/loading weights. The class is designed to be integrated into Unity projects for creating intelligent bots or agents that can learn and make decisions based on the game environment.
 
+## API
+
 ## Features
 
 - RNN architecture with configurable input size, hidden size, and output size.
