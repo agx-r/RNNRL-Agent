@@ -6,6 +6,8 @@ The RNNRLAgent class provides the core functionality for the RNN-based agent. It
 
 ## API
 
+(API)[RNNRLAgent_API.md]
+
 ## Features
 
 - RNN architecture with configurable input size, hidden size, and output size.
