@@ -62,8 +62,3 @@ agent.SaveWeights("weights.txt");
 // Load the weights from a file
 agent.LoadWeights("weights.txt");
 ```
-
-## Notes
-
-- This implementation is a simplified version and may require further modifications and optimizations based on specific requirements.
-- It is recommended to customize the scoring logic in the `AddScore` function for reinforcement learning based on your game's requirements.
