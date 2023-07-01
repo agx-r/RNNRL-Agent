@@ -6,7 +6,7 @@ The RNNRLAgent class provides the core functionality for the RNN-based agent. It
 
 ## API
 
-(API)[RNNRLAgent_API.md]
+(API)[RNNRLAgent_API]
 
 ## Features
 
