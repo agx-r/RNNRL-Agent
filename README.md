@@ -79,5 +79,5 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 ## Authors
 
-- [AGX](https://github.com/Aganow)
+- [AGX](https://github.com/agx-r)
 - [Lunaria Stardrop](https://github.com/LunariaStardrop)
