@@ -73,7 +73,7 @@ public class Bot : MonoBehaviour
 
 This folder contains example scripts for various functionalities.
 
-- [PlayerMovementWithRNN](PlayerMovementWithRNN.md): This example demonstrates how to use the `RNNRLAgent` class to control player movement in a Unity game using a Recurrent Neural Network.
+- [PlayerMovementWithRNN](./examples/PlayerMovementWithRNN.md): This example demonstrates how to use the `RNNRLAgent` class to control player movement in a Unity game using a Recurrent Neural Network.
 
 ## License
 
