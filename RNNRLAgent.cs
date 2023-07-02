@@ -33,37 +33,33 @@ public class RNNRLAgent
 
     private void InitializeWeights()
     {
-        // Initialize input-hidden weights
-        for (int i = 0; i < inputSize; i++)
-        {
-            for (int j = 0; j < hiddenSize; j++)
-            {
-                inputHiddenWeights[i, j] = UnityEngine.Random.Range(-1f, 1f);
-            }
-        }
+        InitializeWeightMatrix(inputHiddenWeights, inputSize, hiddenSize);
+        InitializeWeightMatrix(hiddenHiddenWeights, hiddenSize, hiddenSize);
+        InitializeWeightMatrix(hiddenOutputWeights, hiddenSize, outputSize);
+    }
 
-        // Initialize hidden-hidden weights
-        for (int i = 0; i < hiddenSize; i++)
+    private void InitializeWeightMatrix(float[,] weights, int rows, int cols)
+    {
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < hiddenSize; j++)
+            for (int j = 0; j < cols; j++)
             {
-                hiddenHiddenWeights[i, j] = UnityEngine.Random.Range(-1f, 1f);
-            }
-        }
-
-        // Initialize hidden-output weights
-        for (int i = 0; i < hiddenSize; i++)
-        {
-            for (int j = 0; j < outputSize; j++)
-            {
-                hiddenOutputWeights[i, j] = UnityEngine.Random.Range(-1f, 1f);
+                weights[i, j] = UnityEngine.Random.Range(-1f, 1f);
             }
         }
     }
 
     public float[] ForwardPropagation(float[] inputs)
     {
-        // Update hidden layer state
+        UpdateHiddenLayerState(inputs);
+
+        float[] output = ComputeOutput();
+
+        return output;
+    }
+
+    private void UpdateHiddenLayerState(float[] inputs)
+    {
         for (int j = 0; j < hiddenSize; j++)
         {
             float sum = 0f;
@@ -80,9 +76,12 @@ public class RNNRLAgent
 
             hiddenLayer[j] = (float)Math.Tanh(sum);
         }
+    }
 
-        // Compute output
+    private float[] ComputeOutput()
+    {
         float[] output = new float[outputSize];
+
         for (int j = 0; j < outputSize; j++)
         {
             float sum = 0f;
@@ -100,15 +99,31 @@ public class RNNRLAgent
 
     public void BackwardPropagation(float[] inputs, float[] outputs, float[] target)
     {
+        float[] outputErrors = ComputeOutputErrors(outputs, target);
+
+        UpdateHiddenOutputWeights(outputErrors);
+
+        float[] hiddenErrors = ComputeHiddenErrors(outputErrors);
+
+        UpdateInputHiddenWeights(inputs, hiddenErrors);
+
+        UpdateHiddenHiddenWeights(hiddenErrors);
+    }
+
+    private float[] ComputeOutputErrors(float[] outputs, float[] target)
+    {
         float[] outputErrors = new float[outputSize];
 
-        // Compute output errors
         for (int j = 0; j < outputSize; j++)
         {
             outputErrors[j] = target[j] - outputs[j];
         }
 
-        // Update hidden-output weights
+        return outputErrors;
+    }
+
+    private void UpdateHiddenOutputWeights(float[] outputErrors)
+    {
         for (int i = 0; i < hiddenSize; i++)
         {
             for (int j = 0; j < outputSize; j++)
@@ -116,10 +131,12 @@ public class RNNRLAgent
                 hiddenOutputWeights[i, j] += learningRate * outputErrors[j] * hiddenLayer[i];
             }
         }
+    }
 
+    private float[] ComputeHiddenErrors(float[] outputErrors)
+    {
         float[] hiddenErrors = new float[hiddenSize];
 
-        // Compute hidden errors
         for (int i = 0; i < hiddenSize; i++)
         {
             float sum = 0f;
@@ -132,7 +149,11 @@ public class RNNRLAgent
             hiddenErrors[i] = sum * (1f - hiddenLayer[i] * hiddenLayer[i]);
         }
 
-        // Update input-hidden weights
+        return hiddenErrors;
+    }
+
+    private void UpdateInputHiddenWeights(float[] inputs, float[] hiddenErrors)
+    {
         for (int i = 0; i < inputSize; i++)
         {
             for (int j = 0; j < hiddenSize; j++)
@@ -140,8 +161,10 @@ public class RNNRLAgent
                 inputHiddenWeights[i, j] += learningRate * hiddenErrors[j] * inputs[i];
             }
         }
+    }
 
-        // Update hidden-hidden weights
+    private void UpdateHiddenHiddenWeights(float[] hiddenErrors)
+    {
         for (int i = 0; i < hiddenSize; i++)
         {
             for (int j = 0; j < hiddenSize; j++)
@@ -155,31 +178,22 @@ public class RNNRLAgent
     {
         using (StreamWriter writer = new StreamWriter(filePath))
         {
-            // Write input-hidden weights
-            for (int i = 0; i < inputSize; i++)
-            {
-                for (int j = 0; j < hiddenSize; j++)
-                {
-                    writer.WriteLine(inputHiddenWeights[i, j].ToString());
-                }
-            }
+            WriteWeightMatrix(inputHiddenWeights, writer);
+            WriteWeightMatrix(hiddenHiddenWeights, writer);
+            WriteWeightMatrix(hiddenOutputWeights, writer);
+        }
+    }
 
-            // Write hidden-hidden weights
-            for (int i = 0; i < hiddenSize; i++)
-            {
-                for (int j = 0; j < hiddenSize; j++)
-                {
-                    writer.WriteLine(hiddenHiddenWeights[i, j].ToString());
-                }
-            }
+    private void WriteWeightMatrix(float[,] weights, StreamWriter writer)
+    {
+        int rows = weights.GetLength(0);
+        int cols = weights.GetLength(1);
 
-            // Write hidden-output weights
-            for (int i = 0; i < hiddenSize; i++)
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
             {
-                for (int j = 0; j < outputSize; j++)
-                {
-                    writer.WriteLine(hiddenOutputWeights[i, j].ToString());
-                }
+                writer.WriteLine(weights[i, j].ToString());
             }
         }
     }
@@ -188,31 +202,22 @@ public class RNNRLAgent
     {
         using (StreamReader reader = new StreamReader(filePath))
         {
-            // Read input-hidden weights
-            for (int i = 0; i < inputSize; i++)
-            {
-                for (int j = 0; j < hiddenSize; j++)
-                {
-                    inputHiddenWeights[i, j] = float.Parse(reader.ReadLine());
-                }
-            }
+            ReadWeightMatrix(inputHiddenWeights, reader);
+            ReadWeightMatrix(hiddenHiddenWeights, reader);
+            ReadWeightMatrix(hiddenOutputWeights, reader);
+        }
+    }
 
-            // Read hidden-hidden weights
-            for (int i = 0; i < hiddenSize; i++)
-            {
-                for (int j = 0; j < hiddenSize; j++)
-                {
-                    hiddenHiddenWeights[i, j] = float.Parse(reader.ReadLine());
-                }
-            }
+    private void ReadWeightMatrix(float[,] weights, StreamReader reader)
+    {
+        int rows = weights.GetLength(0);
+        int cols = weights.GetLength(1);
 
-            // Read hidden-output weights
-            for (int i = 0; i < hiddenSize; i++)
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
             {
-                for (int j = 0; j < outputSize; j++)
-                {
-                    hiddenOutputWeights[i, j] = float.Parse(reader.ReadLine());
-                }
+                weights[i, j] = float.Parse(reader.ReadLine());
             }
         }
     }
