@@ -81,7 +81,3 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 - [AGX](https://github.com/Aganow)
 - [Lunaria Stardrop](https://github.com/LunariaStardrop)
-
-## Acknowledgments
-
-This script is inspired by the concepts of Recurrent Neural Networks (RNN) and Reinforcement Learning (RL). Special thanks to the open-source community for their valuable contributions.
