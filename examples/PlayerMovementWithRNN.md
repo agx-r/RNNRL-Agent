@@ -4,8 +4,8 @@ This example demonstrates how to use the `RNNRLAgent` class to control player mo
 
 ## How to Use
 
-1. Attach the `PlayerMovementWithRNN` script to the player object in your Unity scene.
-2. Create a `RNNRLAgent` instance and assign it to the `agent` variable in the `PlayerMovementWithRNN` script using the Unity inspector.
+1. Attach the [PlayerMovementWithRNN.cs](./PlayerMovementWithRNN.cs) script to the player object in your Unity scene.
+2. Create a `RNNRLAgent` instance and assign it to the `agent` variable in the [PlayerMovementWithRNN.cs](./PlayerMovementWithRNN.cs) script using the Unity inspector.
 3. Make sure the player object has a `Rigidbody` component attached to enable physics-based movement.
 
 ## Usage Details
