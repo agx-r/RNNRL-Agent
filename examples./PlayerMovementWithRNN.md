@@ -1,4 +1,4 @@
-# Player Movement with RNN
+Player Movement with RNN
 
 This example demonstrates how to use the `RNNRLAgent` class to control player movement in a Unity game. The script allows the player to move using a Recurrent Neural Network (RNN) trained by the `RNNRLAgent`.
 
