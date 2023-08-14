@@ -18,7 +18,7 @@ The RNNRLAgent class provides the core functionality for the RNN-based agent. It
 
 ## Usage
 
-1. Copy the `RNNRLAgent.cs` script into your Unity project's scripts folder.
+1. Copy the `RNNRLAgent.cs` script into your Unity project.
 
 2. Create an instance of the `RNNRLAgent` class in your bot or agent script, and configure the input size, hidden size, and output size.
 
