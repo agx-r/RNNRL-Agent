@@ -69,11 +69,11 @@ public class Bot : MonoBehaviour
 }
 ```
 
-# Examples
+## Examples
 
-This folder contains example scripts for various functionalities.
+[Sentiment Analysis Agent](./examples/SentimentAnalysisAgentExample.md)
 
-- [PlayerMovementWithRNN](./examples/PlayerMovementWithRNN.md): This example demonstrates how to use the `RNNRLAgent` class to control player movement in a Unity game using a Recurrent Neural Network.
+[Player Movement](./examples/PlayerMovementWithRNN.md)
 
 ## License
 
