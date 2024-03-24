@@ -30,45 +30,6 @@ The RNNRLAgent class provides the core functionality for the RNN-based agent. It
 
 6. Use the `SaveWeights` and `LoadWeights` methods to store and retrieve weights from text files, if needed.
 
-## Example
-
-```csharp
-using UnityEngine;
-
-public class Bot : MonoBehaviour
-{
-    private RNNRLAgent agent;
-
-    private void Start()
-    {
-        // Initialize the RNNRL agent with input size, hidden size, and output size
-        agent = new RNNRLAgent(inputSize, hiddenSize, outputSize);
-    }
-
-    private void Update()
-    {
-        // Gather inputs and compute output using ForwardPropagation
-        float[] inputs = GatherInputs();
-        float[] outputs = agent.ForwardPropagation(inputs);
-
-        // Make decisions based on the outputs
-        MakeDecisions(outputs);
-
-        // Provide feedback and reinforce learning using the AddScore function
-        AddScore();
-    }
-
-    private void AddScore()
-    {
-        // Your scoring logic here
-
-        // Update the agent with the new target and perform backward propagation
-        float[] target = ComputeTarget();
-        agent.BackwardPropagation(inputs, outputs, target);
-    }
-}
-```
-
 ## Examples
 
 [Sentiment Analysis Agent](./examples/SentimentAnalysisAgentExample.md)
